@@ -12,7 +12,7 @@ pipeline {
         }
         stage("Checkout from SCM"){
             steps {
-                git branch: 'main', credentialsId: 'github-tocken', url: 'https://github.com/dmancloud/complete-prodcution-e2e-pipeline'
+                git branch: 'main', credentialsId: 'github-tocken', url: 'https://github.com/naresh9919/Shopping-Cart.git'
             }
         }
         stage("Build Application"){
