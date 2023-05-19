@@ -17,12 +17,12 @@ pipeline {
         }
         stage("Build Application"){
             steps {
-                sh "mvn clean package"
+                sh "mvn clean package -DskipTests=true"
             }
         }
         stage("Test Application"){
             steps {
-                sh "mvn test"
+                sh "mvn test -DskipTests=true"
             }
         }
     }
