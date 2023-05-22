@@ -25,13 +25,11 @@ pipeline {
                 sh "mvn test -DskipTests=true"
             }
         }
-        stage('Sonarqube') {
+        stage("static code analasis"){
             steps {
-                "mvn sonar:sonar \
-                -Dsonar.projectKey=sonar-server \
-                -Dsonar.host.url=http://65.0.125.172:9000 \
-                -Dsonar.login=sqp_5b2d85a49c90303497e603ac4b68eaacf0a49df3"
-               }
+                withSonarQubeEnv("sonar-server"){
+                    sh "mvn sonar:sonar"
+                }
             }
         }
     }
