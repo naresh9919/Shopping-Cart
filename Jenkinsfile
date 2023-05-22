@@ -4,6 +4,9 @@ pipeline {
         jdk  'jdk11'
         maven  'maven3'
     }
+    environment{
+        SCANNER_HOME= tool 'sonar-scanner'
+    }
     stages {
         stage("Cleanup Workspace"){
             steps {
@@ -25,11 +28,13 @@ pipeline {
                 sh "mvn test -DskipTests=true"
             }
         }
-        stage("static code analasis"){
+        stage('Sonarqube') {
             steps {
-                withSonarQubeEnv("sonar-server"){
-                    sh "mvn sonar:sonar"
-                }
+                withSonarQubeEnv('sonar-server'){
+                   sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.url=http://65.0.125.172:9000/ -Dsonar.login=squ_09f8f857e5293e2f265be0eaadc2953b0a527080 -Dsonar.projectName=shopping-cart \
+                   -Dsonar.java.binaries=. \
+                   -Dsonar.projectKey=Shopping-Cart '''
+               }
             }
         }
     }
