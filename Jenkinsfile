@@ -25,5 +25,14 @@ pipeline {
                 sh "mvn test -DskipTests=true"
             }
         }
+        stage('Sonarqube') {
+            steps {
+                withSonarQubeEnv('sonar-server'){
+                   sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.url=http://65.0.125.172:9000/ -Dsonar.login=squ_09f8f857e5293e2f265be0eaadc2953b0a527080 -Dsonar.projectName=shopping-cart \
+                   -Dsonar.java.binaries=. \
+                   -Dsonar.projectKey=Shopping-Cart '''
+               }
+            }
+        }
     }
 }
