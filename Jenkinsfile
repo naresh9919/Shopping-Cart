@@ -27,12 +27,11 @@ pipeline {
         }
         stage('Sonarqube') {
             steps {
-                withSonarQubeEnv('sonar-server'){
-                   sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.url=http://65.0.125.172:9000/ -Dsonar.login=squ_09f8f857e5293e2f265be0eaadc2953b0a527080 -Dsonar.projectName=shopping-cart \
-                   -Dsonar.java.binaries=. \
-                   -Dsonar.projectKey=Shopping-Cart '''
+                "mvn clean verify sonar:sonar \
+                -Dsonar.projectKey=sonar-server \
+                -Dsonar.host.url=http://65.0.125.172:9000 \
+                -Dsonar.login=sqp_5b2d85a49c90303497e603ac4b68eaacf0a49df3"
                }
             }
         }
     }
-}
