@@ -5,7 +5,7 @@ pipeline {
         maven  'maven3'
     }
     environment{
-        SCANNER_HOME= tool 'sonar-scanner'
+        SCANNER_HOME= tool 'sonar scanner'
     }
     stages {
         stage("Cleanup Workspace"){
@@ -31,7 +31,7 @@ pipeline {
         stage('Sonarqube') {
             steps {
                 withSonarQubeEnv('sonar-server'){
-                   sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.url=http://65.0.125.172:9000/ -Dsonar.login=squ_09f8f857e5293e2f265be0eaadc2953b0a527080 -Dsonar.projectName=shopping-cart \
+                   sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.url=http://15.206.187.179:9000/ -Dsonar.login=sqp_cd0d48f9ad65e407a99bf5971f0115fe7102d6e0 -Dsonar.projectName=shopping-cart \
                    -Dsonar.java.binaries=. \
                    -Dsonar.projectKey=Shopping-Cart '''
                }
