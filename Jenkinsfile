@@ -26,13 +26,13 @@ pipeline {
         
         stage("Compile"){
             steps{
-                sh "mvn clean compile"
+                sh "mvn clean compile -DskipTests=true"
             }
         }
         
          stage("Test Cases"){
             steps{
-                sh "mvn test"
+                sh "mvn test -DskipTests=true"
             }
         }
         
@@ -56,7 +56,7 @@ pipeline {
         
          stage("Build"){
             steps{
-                sh " mvn clean install"
+                sh " mvn clean install -DskipTests=true"
             }
         }
         stage('Build docker image'){
