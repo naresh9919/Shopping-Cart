@@ -86,5 +86,13 @@ pipeline {
                 }
             }
         }
+
+        stage("deploy to tomcat"){
+            steps{
+                sshagent(['tomcat-privatekey']) {
+                    sh "scp -o StrictHostKeyChecking=no target/shopping-cart-0.0.1-SNAPSHOT.jar ubuntu@3.110.121.114:/opt/tomcat/webapps"
+                }
+            }
+        }
     }
 }
