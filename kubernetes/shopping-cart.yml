@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: petclinic
+  name: shopping-cart
 spec:
   selector:
     matchLabels:
-      app: petclinic
+      app: shopping-cart
   replicas: 1 
   template: 
     metadata:
       labels:
-        app: petclinic
+        app: shopping-cart
     spec:
       containers:
-      - name: petclinic
-        image: sevenajay/petclinic-1.0
+      - name: shopping-cart
+        image: nareshbabu1991/shopping-cart:latest
         ports:
         - containerPort: 8080
         imagePullPolicy: Always
@@ -22,11 +22,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: petclinic
+  name: shopping-cart
 spec:
   type: LoadBalancer
   selector:
-    app: petclinic
+    app: shopping-cart
   ports:
   - name: http
     protocol: TCP
