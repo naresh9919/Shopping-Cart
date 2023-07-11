@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+
+    tools {
+        jdk 'jdk11'
+        maven 'maven3'
+    }
+
+    stages {
+        stage ('checkout SCM'){
+            steps {
+                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/naresh9919/Shopping-Cart.git'
+            }
+        }
+
+        stage ('maven Build'){
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Build docker image'){
+            steps{
+                script{
+                    sh 'docker build -t Shopping-Cart .'
+                }
+            }
+        }
+        
+        stage("Docker Build & Push"){
+            steps{
+                script{
+                   withDockerRegistry(credentialsId: 'dockerhub-cred', toolName: 'docker') {
+                        
+                        sh "docker tag Shopping-Cart nareshbabu1991/Shopping-Cart:latest "
+                        sh "docker push nareshbabu1991/Shopping-Cart:latest "
+                    }
+                }
+            }
+        }
+
+        stage ("deployment to k8s") {
+            steps {
+                script {
+                    withKubeConfig([credentialsId: 'k8s']){
+                        sh '/var/lib/jenkins/kubectl apply -f deploymentservice.yaml'
+                    }
+                }
+            }
+        }
+    }
+}
