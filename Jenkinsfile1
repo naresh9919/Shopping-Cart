@@ -22,7 +22,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t Shopping-Cart .'
+                    sh 'docker build -t shopping-cart .'
                 }
             }
         }
@@ -32,8 +32,8 @@ pipeline {
                 script{
                    withDockerRegistry(credentialsId: 'dockerhub-cred', toolName: 'docker') {
                         
-                        sh "docker tag Shopping-Cart nareshbabu1991/Shopping-Cart:latest "
-                        sh "docker push nareshbabu1991/Shopping-Cart:latest "
+                        sh "docker tag shopping-cart nareshbabu1991/shopping-cart:latest "
+                        sh "docker push nareshbabu1991/shopping-cart:latest "
                     }
                 }
             }
